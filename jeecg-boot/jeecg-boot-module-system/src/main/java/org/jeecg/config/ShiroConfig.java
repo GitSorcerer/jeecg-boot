@@ -97,6 +97,9 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/auto/cgform/**", "anon");
 		//websocket排除
 		filterChainDefinitionMap.put("/websocket/**", "anon");
+
+
+		filterChainDefinitionMap.put("/test/jeecgDemo/hello", "anon");
 		
 		
 	
