@@ -1,9 +1,18 @@
 spring:
   profiles:
     active: dev
+  application:
+    name: gaohwangh
 swagger:
   production: false
   basic:
     enable: false
     username: jeecg
     password: jeecg1314
+
+#开启mybatis的sql日志
+logging:
+  level:
+    root: info
+    org.jeecg.modules.**.mapper: debug
+  file: Logs/${spring.application.name}.log

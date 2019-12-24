@@ -16,7 +16,8 @@
 	<modules>
 		<module>jeecg-boot-base-common</module>
 		<module>jeecg-boot-module-system</module>
-	</modules>
+        <module>jeecg-boot-project</module>
+    </modules>
 	
 	<distributionManagement>
 	  	<repository>
@@ -52,6 +53,7 @@
 	
     <properties>
         <jeecgboot.common.version>2.1.0</jeecgboot.common.version>
+        <jeecg-boot-project>2.1.0</jeecg-boot-project>
         <java.version>1.8</java.version>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -292,6 +294,11 @@
 	    		<artifactId>jeecg-boot-base-common</artifactId>
 	    		<version>${jeecgboot.common.version}</version>
 	    	</dependency>
+			<dependency>
+				<groupId>org.jeecgframework.boot</groupId>
+				<artifactId>jeecg-boot-project</artifactId>
+				<version>${jeecg-boot-project}</version>
+			</dependency>
 	    	<!-- 七牛云SDK -->
 			<dependency>
 				<groupId>com.qiniu</groupId>

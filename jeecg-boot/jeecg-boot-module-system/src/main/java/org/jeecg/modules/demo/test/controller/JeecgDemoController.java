@@ -8,6 +8,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.aspect.annotation.PermissionData;
@@ -325,13 +326,15 @@ public class JeecgDemoController extends JeecgController<JeecgDemo,IJeecgDemoSer
 	/**
 	 * hello world
 	 *
-	 * @param id
+	 * @param request
 	 * @return
 	 */
 	@GetMapping(value = "/hello")
-	public Result<String> hello() {
-		Result<String> result = new Result<String>();
-		result.setResult("Hello World!");
+	public Result<String> hello(HttpServletRequest request) {
+        String id = request.getParameter("id");
+        id = StringUtils.isNotBlank(id) ? id : "";
+        Result<String> result = new Result<String>();
+        result.setResult("Hello World!" + id);
 		result.setSuccess(true);
 		return result;
 	}
