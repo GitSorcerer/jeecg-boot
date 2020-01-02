@@ -1,70 +1,31 @@
-package org.jeecg.modules.controller;
+package com.gaoh.test;
 
 import com.alibaba.fastjson.JSONObject;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.StringUtils;
-import org.jeecg.common.api.vo.Result;
 import org.jeecg.modules.entity.TreeModel;
 import org.jeecg.modules.utils.BaseUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.junit.Test;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @Author: GH
- * @Date: 2019/11/18 21:56
+ * @Date: 2019/12/25 22:21
  * @Version 1.0
  */
-@RestController
-@Api("测试")
 @Slf4j
-@RequestMapping("/test")
-public class TestProjectController {
+public class test {
 
-    /**
-     * hello world
-     *
-     * @param request
-     * @return
-     */
-    @GetMapping(value = "/hello")
-    @ApiOperation(value = "测试请求")
-    public Result<String> hello(HttpServletRequest request) {
-        String id = request.getParameter("id");
-        id = StringUtils.isNotBlank(id) ? id : "";
-        Result<String> result = new Result<String>();
-        result.setResult("Hello jeecg-boot-project!" + id);
-        result.setSuccess(true);
-        return result;
-    }
-
-    @GetMapping(value = "/treeTest")
-    @ApiOperation(value = "生成树")
-    public Result<List<TreeModel>> treeTest(HttpServletRequest request) {
-        String id = request.getParameter("id");
-        id = StringUtils.isNotBlank(id) ? id : "";
-        Result<List<TreeModel>> result = new Result< >();
-        //
-        //
-
-        result.setResult(getDate());
-        result.setSuccess(true);
-        return result;
-    }
-
-    public List<TreeModel> getDate() {
+    @Test
+    public void test() {
         List<TreeModel> treeList = new ArrayList<>();
         TreeModel tree  = new TreeModel();
         tree.setTitle("中国");
         tree.setKey("0");
         tree.setParentKey(" ");
         treeList.add(tree);
+
 
         TreeModel tree1 = new TreeModel();
         tree1.setTitle("湖北");
@@ -124,6 +85,8 @@ public class TestProjectController {
         log.debug(JSONObject.toJSONString(treeList));
 
         treeList = BaseUtils.recursiveGenerateTree(treeList, " ");
-        return treeList;
+        log.debug("长度:{}", treeList.size());
+        log.debug(JSONObject.toJSONString(treeList));
+
     }
 }

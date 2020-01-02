@@ -99,7 +99,8 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/websocket/**", "anon");
 
 
-		filterChainDefinitionMap.put("/test/jeecgDemo/hello", "anon");
+//		filterChainDefinitionMap.put("/test/jeecgDemo/hello", "anon");
+		filterChainDefinitionMap.put("/test/**", "anon");
 		
 		
 		// 添加自己的过滤器并且取名为jwt

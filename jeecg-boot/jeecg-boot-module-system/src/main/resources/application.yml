@@ -15,4 +15,5 @@ logging:
   level:
     root: info
     org.jeecg.modules.**.mapper: debug
+    com.gaoh: debug
   file: Logs/${spring.application.name}.log
