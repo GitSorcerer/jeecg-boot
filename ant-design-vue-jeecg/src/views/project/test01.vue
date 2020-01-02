@@ -1,9 +1,15 @@
 <template>
-
   <div>
-    <Button type="primary" shape="circle" icon="search" />
-    {{ msg }}
-
+    <a-button type="primary">Primary</a-button>
+    <div style="margin-top: 10px">
+      <a-input placeholder="Basic usage" v-model="testData"/>
+    </div>
+    <div style="margin-top: 10px">
+      {{ testData }}
+    </div>
+    <div style="margin-top: 10px">
+      {{ msg }}
+    </div>
   </div>
 </template>
 
@@ -12,7 +18,8 @@
   export default {
     data () {
       return {
-        msg: ""
+        msg: "",
+        testData: ''
       }
     },
     methods: {
