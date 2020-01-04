@@ -8,8 +8,8 @@ import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.Converter;
 import org.apache.commons.lang.StringUtils;
-import org.jeecg.modules.entity.TreeModel;
-import org.jeecg.modules.exception.BusinessException;
+import org.jeecg.modules.project.entity.TreeModel;
+import org.jeecg.modules.project.exception.BusinessException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -468,10 +468,7 @@ public class BaseUtils {
             throw new BusinessException("未找到文件上传本地磁盘路径配置！");
         }
         String[] localPathArr = localPath.split("~");
-//        String os = System.getProperty(CommonUtils.OS_NAME);
-        String os = "";
-
-        if (os.toLowerCase().startsWith("win")) {
+        if (System.getProperty("os.name").toLowerCase().startsWith("win")) {
             return localPathArr[0];
         } else {
             if (localPathArr.length < 2) {

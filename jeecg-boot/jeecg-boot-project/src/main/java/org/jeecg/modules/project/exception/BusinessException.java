@@ -1,4 +1,4 @@
-package org.jeecg.modules.exception;
+package org.jeecg.modules.project.exception;
 
 import org.jeecg.modules.utils.BaseUtils;
 

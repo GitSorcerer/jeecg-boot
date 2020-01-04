@@ -2,7 +2,7 @@ package com.gaoh.test;
 
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
-import org.jeecg.modules.entity.TreeModel;
+import org.jeecg.modules.project.entity.TreeModel;
 import org.jeecg.modules.utils.BaseUtils;
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package org.jeecg.modules.entity;
+package org.jeecg.modules.project.entity;
 
 import lombok.Data;
 

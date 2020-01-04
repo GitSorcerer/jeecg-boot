@@ -1,10 +1,7 @@
-package org.jeecg.modules.mapper;
+package org.jeecg.modules.project.mapper;
 
-import java.util.List;
-
-import org.apache.ibatis.annotations.Param;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.jeecg.modules.entity.Papers;
+import org.jeecg.modules.project.entity.Papers;
 
 /**
  * @Description: 文件

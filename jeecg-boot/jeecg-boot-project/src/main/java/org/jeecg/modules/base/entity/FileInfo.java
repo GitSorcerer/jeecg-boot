@@ -1,9 +1,11 @@
-package org.jeecg.modules.system.model;
+package org.jeecg.modules.base.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.TableField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -14,20 +16,20 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.jeecgframework.poi.excel.annotation.Excel;
 
 /**
- * @Description: 文件表
+ * @Description: 文件信息表
  * @Author: jeecg-boot
- * @Date:   2020-01-02
+ * @Date:   2020-01-04
  * @Version: V1.0
  */
 @Data
 @TableName("file_info")
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="file_info对象", description="文件表")
-public class FileInfoModel {
+@ApiModel(value="file_info对象", description="文件信息表")
+public class FileInfo {
     
 	/**id*/
-	@TableId(type = IdType.AUTO)
+	@TableId(type = IdType.UUID)
     @ApiModelProperty(value = "id")
 	private Integer id;
 	/**创建人*/

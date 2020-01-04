@@ -1,4 +1,4 @@
-package org.jeecg.modules.controller;
+package org.jeecg.modules.project.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import io.swagger.annotations.Api;
@@ -6,7 +6,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.jeecg.common.api.vo.Result;
-import org.jeecg.modules.entity.TreeModel;
+import org.jeecg.modules.project.entity.TreeModel;
 import org.jeecg.modules.utils.BaseUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

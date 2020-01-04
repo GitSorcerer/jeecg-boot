@@ -1,4 +1,4 @@
-package org.jeecg.modules.controller;
+package org.jeecg.modules.project.controller;
 
 import java.util.Arrays;
 import java.util.List;
@@ -18,8 +18,8 @@ import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.util.oConvertUtils;
 import lombok.extern.slf4j.Slf4j;
 
-import org.jeecg.modules.entity.Papers;
-import org.jeecg.modules.service.IPapersService;
+import org.jeecg.modules.project.entity.Papers;
+import org.jeecg.modules.project.service.IPapersService;
 import org.jeecgframework.poi.excel.ExcelImportUtil;
 import org.jeecgframework.poi.excel.def.NormalExcelConstants;
 import org.jeecgframework.poi.excel.entity.ExportParams;

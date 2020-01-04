@@ -1,4 +1,4 @@
-package org.jeecg.modules.system.controller;
+package org.jeecg.modules.project.controller;
 
 import java.util.Arrays;
 import java.util.List;
@@ -12,14 +12,14 @@ import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.util.oConvertUtils;
-import java.util.Date;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 
-import org.jeecg.modules.system.model.FileInfoModel;
-import org.jeecg.modules.system.service.IFileInfoService;
+import org.jeecg.modules.base.service.IFileInfoService;
+import org.jeecg.modules.project.entity.SysTest;
+import org.jeecg.modules.project.service.ISysTestService;
 import org.jeecgframework.poi.excel.ExcelImportUtil;
 import org.jeecgframework.poi.excel.def.NormalExcelConstants;
 import org.jeecgframework.poi.excel.entity.ExportParams;
@@ -36,38 +36,41 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
  /**
- * @Description: 文件表
+ * @Description: 测试模块
  * @Author: jeecg-boot
- * @Date:   2020-01-02
+ * @Date:   2020-01-04
  * @Version: V1.0
  */
 @Slf4j
-@Api(tags="文件表")
+@Api(tags="测试模块")
 @RestController
-@RequestMapping("/fileInfo/file")
-public class FileInfoController {
+@RequestMapping("/modules/sysTest")
+public class SysTestController {
 	@Autowired
-	private IFileInfoService fileService;
-	
+	private ISysTestService sysTestService;
+
+	 @Autowired
+	 private IFileInfoService iFileInfoService;
+
 	/**
 	  * 分页列表查询
-	 * @param file
+	 * @param sysTest
 	 * @param pageNo
 	 * @param pageSize
 	 * @param req
 	 * @return
 	 */
-	@AutoLog(value = "文件表-分页列表查询")
-	@ApiOperation(value="文件表-分页列表查询", notes="文件表-分页列表查询")
+	@AutoLog(value = "测试模块-分页列表查询")
+	@ApiOperation(value="测试模块-分页列表查询", notes="测试模块-分页列表查询")
 	@GetMapping(value = "/list")
-	public Result<IPage<FileInfoModel>> queryPageList(FileInfoModel file,
-													  @RequestParam(name="pageNo", defaultValue="1") Integer pageNo,
-													  @RequestParam(name="pageSize", defaultValue="10") Integer pageSize,
-													  HttpServletRequest req) {
-		Result<IPage<FileInfoModel>> result = new Result<IPage<FileInfoModel>>();
-		QueryWrapper<FileInfoModel> queryWrapper = QueryGenerator.initQueryWrapper(file, req.getParameterMap());
-		Page<FileInfoModel> page = new Page<FileInfoModel>(pageNo, pageSize);
-		IPage<FileInfoModel> pageList = fileService.page(page, queryWrapper);
+	public Result<IPage<SysTest>> queryPageList(SysTest sysTest,
+												@RequestParam(name="pageNo", defaultValue="1") Integer pageNo,
+												@RequestParam(name="pageSize", defaultValue="10") Integer pageSize,
+												HttpServletRequest req) {
+		Result<IPage<SysTest>> result = new Result<IPage<SysTest>>();
+		QueryWrapper<SysTest> queryWrapper = QueryGenerator.initQueryWrapper(sysTest, req.getParameterMap());
+		Page<SysTest> page = new Page<SysTest>(pageNo, pageSize);
+		IPage<SysTest> pageList = sysTestService.page(page, queryWrapper);
 		result.setSuccess(true);
 		result.setResult(pageList);
 		return result;
@@ -75,16 +78,17 @@ public class FileInfoController {
 	
 	/**
 	  *   添加
-	 * @param file
+	 * @param sysTest
 	 * @return
 	 */
-	@AutoLog(value = "文件表-添加")
-	@ApiOperation(value="文件表-添加", notes="文件表-添加")
+	@AutoLog(value = "测试模块-添加")
+	@ApiOperation(value="测试模块-添加", notes="测试模块-添加")
 	@PostMapping(value = "/add")
-	public Result<FileInfoModel> add(@RequestBody FileInfoModel file) {
-		Result<FileInfoModel> result = new Result<FileInfoModel>();
+	public Result<SysTest> add(@RequestBody SysTest sysTest,
+							   MultipartFile [] multipartFile) {
+		Result<SysTest> result = new Result<SysTest>();
 		try {
-			fileService.save(file);
+			sysTestService.save(sysTest);
 			result.success("添加成功！");
 		} catch (Exception e) {
 			log.error(e.getMessage(),e);
@@ -95,19 +99,19 @@ public class FileInfoController {
 	
 	/**
 	  *  编辑
-	 * @param file
+	 * @param sysTest
 	 * @return
 	 */
-	@AutoLog(value = "文件表-编辑")
-	@ApiOperation(value="文件表-编辑", notes="文件表-编辑")
+	@AutoLog(value = "测试模块-编辑")
+	@ApiOperation(value="测试模块-编辑", notes="测试模块-编辑")
 	@PutMapping(value = "/edit")
-	public Result<FileInfoModel> edit(@RequestBody FileInfoModel file) {
-		Result<FileInfoModel> result = new Result<FileInfoModel>();
-		FileInfoModel fileEntity = fileService.getById(file.getId());
-		if(fileEntity==null) {
+	public Result<SysTest> edit(@RequestBody SysTest sysTest) {
+		Result<SysTest> result = new Result<SysTest>();
+		SysTest sysTestEntity = sysTestService.getById(sysTest.getId());
+		if(sysTestEntity==null) {
 			result.error500("未找到对应实体");
 		}else {
-			boolean ok = fileService.updateById(file);
+			boolean ok = sysTestService.updateById(sysTest);
 			//TODO 返回false说明什么？
 			if(ok) {
 				result.success("修改成功!");
@@ -122,12 +126,12 @@ public class FileInfoController {
 	 * @param id
 	 * @return
 	 */
-	@AutoLog(value = "文件表-通过id删除")
-	@ApiOperation(value="文件表-通过id删除", notes="文件表-通过id删除")
+	@AutoLog(value = "测试模块-通过id删除")
+	@ApiOperation(value="测试模块-通过id删除", notes="测试模块-通过id删除")
 	@DeleteMapping(value = "/delete")
 	public Result<?> delete(@RequestParam(name="id",required=true) String id) {
 		try {
-			fileService.removeById(id);
+			sysTestService.removeById(id);
 		} catch (Exception e) {
 			log.error("删除失败",e.getMessage());
 			return Result.error("删除失败!");
@@ -140,15 +144,15 @@ public class FileInfoController {
 	 * @param ids
 	 * @return
 	 */
-	@AutoLog(value = "文件表-批量删除")
-	@ApiOperation(value="文件表-批量删除", notes="文件表-批量删除")
+	@AutoLog(value = "测试模块-批量删除")
+	@ApiOperation(value="测试模块-批量删除", notes="测试模块-批量删除")
 	@DeleteMapping(value = "/deleteBatch")
-	public Result<FileInfoModel> deleteBatch(@RequestParam(name="ids",required=true) String ids) {
-		Result<FileInfoModel> result = new Result<FileInfoModel>();
+	public Result<SysTest> deleteBatch(@RequestParam(name="ids",required=true) String ids) {
+		Result<SysTest> result = new Result<SysTest>();
 		if(ids==null || "".equals(ids.trim())) {
 			result.error500("参数不识别！");
 		}else {
-			this.fileService.removeByIds(Arrays.asList(ids.split(",")));
+			this.sysTestService.removeByIds(Arrays.asList(ids.split(",")));
 			result.success("删除成功!");
 		}
 		return result;
@@ -159,16 +163,16 @@ public class FileInfoController {
 	 * @param id
 	 * @return
 	 */
-	@AutoLog(value = "文件表-通过id查询")
-	@ApiOperation(value="文件表-通过id查询", notes="文件表-通过id查询")
+	@AutoLog(value = "测试模块-通过id查询")
+	@ApiOperation(value="测试模块-通过id查询", notes="测试模块-通过id查询")
 	@GetMapping(value = "/queryById")
-	public Result<FileInfoModel> queryById(@RequestParam(name="id",required=true) String id) {
-		Result<FileInfoModel> result = new Result<FileInfoModel>();
-		FileInfoModel file = fileService.getById(id);
-		if(file==null) {
+	public Result<SysTest> queryById(@RequestParam(name="id",required=true) String id) {
+		Result<SysTest> result = new Result<SysTest>();
+		SysTest sysTest = sysTestService.getById(id);
+		if(sysTest==null) {
 			result.error500("未找到对应实体");
 		}else {
-			result.setResult(file);
+			result.setResult(sysTest);
 			result.setSuccess(true);
 		}
 		return result;
@@ -183,13 +187,13 @@ public class FileInfoController {
   @RequestMapping(value = "/exportXls")
   public ModelAndView exportXls(HttpServletRequest request, HttpServletResponse response) {
       // Step.1 组装查询条件
-      QueryWrapper<FileInfoModel> queryWrapper = null;
+      QueryWrapper<SysTest> queryWrapper = null;
       try {
           String paramsStr = request.getParameter("paramsStr");
           if (oConvertUtils.isNotEmpty(paramsStr)) {
               String deString = URLDecoder.decode(paramsStr, "UTF-8");
-			  FileInfoModel file = JSON.parseObject(deString, FileInfoModel.class);
-              queryWrapper = QueryGenerator.initQueryWrapper(file, request.getParameterMap());
+              SysTest sysTest = JSON.parseObject(deString, SysTest.class);
+              queryWrapper = QueryGenerator.initQueryWrapper(sysTest, request.getParameterMap());
           }
       } catch (UnsupportedEncodingException e) {
           e.printStackTrace();
@@ -197,11 +201,11 @@ public class FileInfoController {
 
       //Step.2 AutoPoi 导出Excel
       ModelAndView mv = new ModelAndView(new JeecgEntityExcelView());
-      List<FileInfoModel> pageList = fileService.list(queryWrapper);
+      List<SysTest> pageList = sysTestService.list(queryWrapper);
       //导出文件名称
-      mv.addObject(NormalExcelConstants.FILE_NAME, "文件表列表");
-      mv.addObject(NormalExcelConstants.CLASS, FileInfoModel.class);
-      mv.addObject(NormalExcelConstants.PARAMS, new ExportParams("文件表列表数据", "导出人:Jeecg", "导出信息"));
+      mv.addObject(NormalExcelConstants.FILE_NAME, "测试模块列表");
+      mv.addObject(NormalExcelConstants.CLASS, SysTest.class);
+      mv.addObject(NormalExcelConstants.PARAMS, new ExportParams("测试模块列表数据", "导出人:Jeecg", "导出信息"));
       mv.addObject(NormalExcelConstants.DATA_LIST, pageList);
       return mv;
   }
@@ -224,9 +228,9 @@ public class FileInfoController {
           params.setHeadRows(1);
           params.setNeedSave(true);
           try {
-              List<FileInfoModel> listfiles = ExcelImportUtil.importExcel(file.getInputStream(), FileInfoModel.class, params);
-              fileService.saveBatch(listfiles);
-              return Result.ok("文件导入成功！数据行数:" + listfiles.size());
+              List<SysTest> listSysTests = ExcelImportUtil.importExcel(file.getInputStream(), SysTest.class, params);
+              sysTestService.saveBatch(listSysTests);
+              return Result.ok("文件导入成功！数据行数:" + listSysTests.size());
           } catch (Exception e) {
               log.error(e.getMessage(),e);
               return Result.error("文件导入失败:"+e.getMessage());
@@ -241,4 +245,17 @@ public class FileInfoController {
       return Result.ok("文件导入失败！");
   }
 
+
+	 @AutoLog(value = "测试模块-分页列表查询")
+	 @ApiOperation(value="测试模块-分页列表查询", notes="测试模块-分页列表查询")
+	 @GetMapping(value = "/uploadImg")
+	 public Result<String> queryPageList(MultipartFile [] files,
+												 HttpServletRequest req) {
+		 Result<String> result = new Result<>();
+
+
+		 result.setSuccess(true);
+		 result.setResult("成功");
+		 return result;
+	 }
 }
